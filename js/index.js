@@ -1,15 +1,42 @@
-function Book(title, author, year, pages) {
-  this.title = title;
-  this.author = author;
-  this.year = year;
-  this.pages = pages;
-  this.read = false;
-}
+const Book = (
+  function book() {
+    const that = {};
+    const setNotEmpty = (prop, value) => {
+      if (value) { that[prop] = value; return true; }
+      return false;
+    };
+    const setPositive = (prop, value) => {
+      if (typeof value === 'number' && value >= 0) { that[prop] = value; return true; }
+      return false;
+    };
+    const setBool = (prop, value) => { that[prop] = !!value; return true; };
+    const setterAndGetter = (prop, setter) => {
+      const propBuilder = {};
+      propBuilder[`set${prop}`] = (value) => setter(prop, value);
+      propBuilder[`get${prop}`] = () => that[prop];
+      return propBuilder;
+    };
+    return {
+      ...setterAndGetter('Title', setNotEmpty),
+      ...setterAndGetter('Author', setNotEmpty),
+      ...setterAndGetter('Year', setPositive),
+      ...setterAndGetter('Pages', setPositive),
+      ...setterAndGetter('Read', setBool),
+    };
+  }());
 
-const myLibrary = [
-  new Book('Hello world', 'The world', 1970, 1000),
-  new Book('Goobye world', 'The world', 2038, 2000),
-];
+const book1 = Book;
+book1.setTitle('Hello world');
+book1.setAuthor('The world');
+book1.setYear(1970);
+book1.setPages(1000);
+const book2 = Book;
+book1.setTitle('Goobye world');
+book1.setAuthor('The world');
+book1.setYear(2038);
+book1.setPages(1000);
+
+const myLibrary = [book1, book2];
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
