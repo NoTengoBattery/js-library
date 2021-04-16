@@ -47,6 +47,7 @@ const Library = (
         return books[index];
       },
       forEachBook: (iter) => { that.books.forEach(iter); },
+      deleteBook: (book) => { that.books.splice(book, 1); },
     };
   }()
 );
@@ -89,7 +90,7 @@ function deleteBooks(el) {
   if (el.classList.contains('delete')) {
     const currentRow = el.parentElement.parentElement;
     const currentIndex = Number(currentRow.dataset.index);
-    myLibrary.splice(currentIndex, 1);
+    Library.deleteBook(currentIndex);
   }
 }
 
@@ -97,8 +98,8 @@ function toggleRead(el) {
   if (el.classList.contains('toggle-read')) {
     const currentRow = el.parentElement.parentElement;
     const currentIndex = Number(currentRow.dataset.index);
-    const book = myLibrary[currentIndex];
-    book.read = !book.read;
+    const book = Library.getBook(currentIndex);
+    book.setRead(!book.getRead());
   }
 }
 
