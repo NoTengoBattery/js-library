@@ -1,5 +1,5 @@
-const Book = (
-  function book() {
+function BookFactory() {
+  this.build = () => {
     const that = {};
     const setNotEmpty = (prop, value) => {
       if (value) { that[prop] = value; return true; }
@@ -23,7 +23,8 @@ const Book = (
       ...setterAndGetter('Pages', setPositive),
       ...setterAndGetter('Read', setBool),
     };
-  }());
+  };
+}
 
 const book1 = Book;
 book1.setTitle('Hello world');
