@@ -5,39 +5,54 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+    integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
   <link rel="stylesheet" href="assets/style.css">
   <script type="text/javascript" src="js/index.js" charset="utf-8"></script>
   <title>Document</title>
 </head>
 
 <body>
-  <h1>Library</h1>
   <div class="container">
-    
-    <button type="submit" value="submit" id="showInputsBtn">ADD BOOK</button>
+    <h1>Library</h1>
 
-    <form action="" id="bookForm" style="display:none;">
-      <label for="title">Title</label>
-      <input type="text" name="title" id="inputTitle"><br>
-      <label for="author">Author</label>
-      <input type="text" name="author" id="inputAuthor"><br>
-      <label for="year">Year</label>
-      <input type="text" name="year" id="inputYear"><br>
-      <label for="pages">Pages</label>
-      <input type="number" name="pages" id="inputPages"><br>
-      <input type="button" value="Submit" id="inputButton">
+    <button type="submit" value="submit" id="showInputsBtn" class="btn btn-primary">ADD BOOK</button>
+
+    <form action="" id="bookForm">
+      <div id="formFields" class="row">
+        <div class="form-group col-6">
+          <label for="title">Title</label>
+          <input type="text" name="title" id="inputTitle" class="form-control">
+        </div>
+        <div class="form-group col-6">
+          <label for="author">Author</label>
+          <input type="text" name="author" id="inputAuthor" class="form-control">
+        </div>
+        <div class="form-group col-6">
+          <label for="year">Year</label>
+          <input type="number" name="year" id="inputYear" class="form-control">
+        </div>
+        <div class="form-group col-6">
+          <label for="pages">Pages</label>
+          <input type="number" name="pages" id="inputPages" class="form-control">
+        </div>
+        <div class="form-group col">
+          <input type="button" value="Submit" id="inputButton" class="btn btn-secondary">
+        </div>
+      </div>
     </form>
-
-    <table id="bookShelf">
-      <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Year</th>
-        <th>Pages</th>
-        <th>Read</th>
-        <th>Toggle read</th>
-        <th>Delete</th>
-      </tr>
+    <table id="bookShelf" class="table mt-5">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Author</th>
+          <th scope="col">Year</th>
+          <th scope="col">Pages</th>
+          <th scope="col">Read</th>
+          <th scope="col">Toggle read</th>
+          <th scope="col">Delete</th>
+        </tr>
+      </thead>
       <tbody id="bookShelfContent">
       </tbody>
     </table>

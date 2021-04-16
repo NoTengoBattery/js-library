@@ -106,8 +106,10 @@ function toggleRead(el) {
 function showAlert(message) {
   const div = document.createElement('div');
   div.appendChild(document.createTextNode(message));
-  const container = document.querySelector('.container');
-  const form = document.querySelector('#bookForm');
+  div.classList.add('alert', 'alert-danger');
+  div.setAttribute('role', 'alert');
+  const container = document.querySelector('#bookForm');
+  const form = document.querySelector('#formFields');
   container.insertBefore(div, form);
   setTimeout(() => div.remove(), 5000);
 }
@@ -132,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .querySelector('#inputButton')
     .addEventListener('click', addBookHandler);
   document
-    .getElementById('showInputsBtn')
+    .querySelector('#showInputsBtn')
     .addEventListener('click', showForm);
 
   document.querySelector('#bookShelfContent').addEventListener('click', (e) => {
