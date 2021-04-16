@@ -109,20 +109,17 @@ function showAlert(message) {
   const container = document.querySelector('.container');
   const form = document.querySelector('#bookForm');
   container.insertBefore(div, form);
-  setTimeout(() => div.remove(), 3000);
+  setTimeout(() => div.remove(), 5000);
 }
 
 function addBookHandler() {
   const title = document.querySelector('#inputTitle').value;
   const author = document.querySelector('#inputAuthor').value;
-  const year = document.querySelector('#inputYear').value;
-  const pages = document.querySelector('#inputPages').value;
+  const year = Number(document.querySelector('#inputYear').value);
+  const pages = Number(document.querySelector('#inputPages').value);
 
-  if (title && author && year && pages) {
-    const book = new Book(title, author, year, pages);
-
-    addBookToLibrary(book);
-    showBooks(myLibrary);
+  if (Library.addBook(title, author, year, pages)) {
+    showBooks(Library);
   } else {
     showAlert('Please fill all the fields');
   }
@@ -130,10 +127,13 @@ function addBookHandler() {
 
 document.addEventListener('DOMContentLoaded', () => {
   showBooks(Library);
+
   document
     .querySelector('#inputButton')
     .addEventListener('click', addBookHandler);
-  document.getElementById('showInputsBtn').addEventListener('click', showForm);
+  document
+    .getElementById('showInputsBtn')
+    .addEventListener('click', showForm);
 
   document.querySelector('#bookShelfContent').addEventListener('click', (e) => {
     deleteBooks(e.target);
