@@ -26,22 +26,34 @@ function BookFactory() {
   };
 }
 
-const book1 = Book;
-book1.setTitle('Hello world');
-book1.setAuthor('The world');
-book1.setYear(1970);
-book1.setPages(1000);
-const book2 = Book;
-book1.setTitle('Goobye world');
-book1.setAuthor('The world');
-book1.setYear(2038);
-book1.setPages(1000);
+const Library = (
+  function library() {
+    const bookFactory = new BookFactory();
+    const that = { books: [] };
+    return {
+      addBook: (title, author, year, pages) => {
+        const { books } = that;
+        const bookBuilder = bookFactory.build();
+        let valid = true;
+        valid &&= bookBuilder.setTitle(title);
+        valid &&= bookBuilder.setAuthor(author);
+        valid &&= bookBuilder.setYear(year);
+        valid &&= bookBuilder.setPages(pages);
+        if (valid) { books.push(bookBuilder); }
+        return valid;
+      },
+      getBook: (index) => {
+        const { books } = that;
+        return books[index];
+      },
+      forEachBook: (iter) => { that.books.forEach(iter); },
+    };
+  }()
+);
 
-const myLibrary = [book1, book2];
+Library.addBook('Hello world', 'The world', 1970, 1000);
+Library.addBook('Goobye world', 'The world', 2038, 1000);
 
-function addBookToLibrary(book) {
-  myLibrary.push(book);
-}
 
 function showForm() {
   const f = document.getElementById('bookForm');
@@ -59,14 +71,14 @@ function showBooks(library) {
     parent.appendChild(cell);
   }
   document.querySelector('#bookShelfContent').innerHTML = '';
-  library.forEach((book, index) => {
+  library.forEachBook((book, index) => {
     const bookDOM = document.createElement('tr');
     bookDOM.dataset.index = index;
-    createCell(bookDOM, book.title);
-    createCell(bookDOM, book.author);
-    createCell(bookDOM, book.year);
-    createCell(bookDOM, book.pages);
-    createCell(bookDOM, book.read ? 'yes' : 'no');
+    createCell(bookDOM, book.getTitle());
+    createCell(bookDOM, book.getAuthor());
+    createCell(bookDOM, book.getYear());
+    createCell(bookDOM, book.getPages());
+    createCell(bookDOM, book.getRead() ? 'yes' : 'no');
     createCell(bookDOM, '<a class="toggle-read" href="#">O</a>');
     createCell(bookDOM, '<a class="delete" href="#">X</a>');
     document.querySelector('#bookShelfContent').appendChild(bookDOM);
@@ -116,7 +128,7 @@ function addBookHandler() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  showBooks(myLibrary);
+  showBooks(Library);
   document
     .querySelector('#inputButton')
     .addEventListener('click', addBookHandler);
@@ -125,6 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelector('#bookShelfContent').addEventListener('click', (e) => {
     deleteBooks(e.target);
     toggleRead(e.target);
-    showBooks(myLibrary);
+    showBooks(Library);
   });
 });
